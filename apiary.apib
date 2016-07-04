@@ -5,7 +5,11 @@ HOST: http://harvesters.whitecrestmushrooms.com/
 
 This API lists all the harvesters associated with a site, sends information about hardware status, and shows data about picking, packing, and mushroom growing.
 
-## Concepts
+## Endpoints and API Access
+
+For ItemPath (or any other application) to access data from the harvester, an endpoint structure will need to be set up. Either the harvesters each will need to be connected to the internet and have an endpoint where this API is accesible, or each site will need to have a global processor to take data from the harvesters and provide a single endpoint to connect to.
+
+## Core Concepts & Routes
 
 * *Harvester:* A harvester is a single unit consisting of a lift, cart, scale and a packer. Inside a harvester there are mushrooms growing on beds, spread over many different vertical levels.
     * *Packer:*
@@ -25,7 +29,6 @@ A harvester is a single unit consisting of a lift, cart, scale and a packer. Ins
 ### List all Harvesters [GET]
 
 This route displays all Harvesters on a site, and includes their name, ID, and status.
-
 
 + Attributes
     + id (number) - ID of the harvester in the form of an integer
@@ -61,8 +64,8 @@ This route displays all Harvesters on a site, and includes their name, ID, and s
         + 1: active
     + name (string) - Descriptor of the harvester
     + level_id (number) - ID of the level the harvester is positioned at
-    + bed_id (number)  - ID of the bed the harvester is positioned at
-
+    + bed_id (number) - ID of the bed the harvester is positioned at
+    + levels (number) - the number of levels in the harvester 
 
 ### Show a Harvester [GET]
 
@@ -84,21 +87,20 @@ This route exposes a single Harvester, shows the current level and bed position,
                 "bed_id": 40,
             }
 
-
 # Group Levels
 
 A level is a collection of beds stacked vertically in a a harvester.
 
-## Level [/harvesters/{harvester_id}/levels/{id}]
+## Level [/levels/{id}]
 
 
 + Parameters
-    + harvester_id (number, optional) - the ID of the parent harvester.
     + id (number) - The ID of the desired level.
 
 + Attributes (object)
     + id: 1 (number, required)
     + position: 0 (number, required) - vertical location of level 
+    + beds: [1,2,3,4] (array[number]) - array of bed ID's in level
 
 ### Retrieve a Level [GET]
 Retrieves the level with the given ID.
@@ -106,14 +108,15 @@ Retrieves the level with the given ID.
 + Response 200 (application/json)
     + Attributes (Level)
 
-## Levels [/levels{?limit}]
+## Levels [/harvester/{harvester_id}/levels{?limit}]
 
 + Attributes (array[Level])
 
 ### List all Levels [GET]
-Returns a list of your Levels.
+Returns a list of your Levels on a specific harvester, in order of position.
 
 + Parameters
+    + harvester_id (number) - the ID of the harvester.
     + limit (number, optional)
 
         A limit on the number of objects to be returned. Limit can range
@@ -128,11 +131,10 @@ Returns a list of your Levels.
 
 A bed is a soil area on a level where mushrooms are grown.
 
-## Bed [/harvesters/{harvester_id}/beds/{id}]
+## Bed [/beds/{id}]
 
 
 + Parameters
-    + harvester_id (number, optional) - the ID of the parent harvester.
     + id (number) - The ID of the desired bed.
 
 + Attributes (object)
@@ -140,6 +142,9 @@ A bed is a soil area on a level where mushrooms are grown.
     + position: 0 (number, required) - horizontal location of bed on a level
     + width: 24 (number) - width of bed in cm
     + height: 96 (number) - height of bed in cm 
+    + level_id: 1 (number) - the ID of the level the bed is located on
+    + ph: 8 (number) - the current pH level
+    + temperature: 276 (number) - the current temperature
 
 ### Retrieve a Bed [GET]
 Retrieves the level with the given ID.
@@ -165,72 +170,45 @@ Returns a list of your Beds.
 + Response 200 (application/json)
     + Attributes (Beds)
 
+# Group Mushrooms
 
+A mushroom is located on a bed, in a level, and on a harvester.
 
-# Group Lifts
+## Mushroom [/mushrooms/{id}]
 
-## Lift  [/harvesters/{harvester_id}/lift]
-
-# Group Packers
-
-## Packer [/harvesters/{harvester_id}/packer]
-
-# Group Carts
-
-## Cart [/harvesters/{harvester_id}/cart]
 
 + Parameters
-    + harvester_id (number) - ID of the harvester in the form of an integer
-    
-### Show a cart [GET]
+    + id (number) - The ID of the desired mushroom.
 
-This route exposes a the cart of a single Harvester.
++ Attributes (object)
+    + id: 1 (number, required)
+    + x-coordinate: 14 (number, required) - x position on bed
+    + y-coordinate: 35 (number, required) - y position on bed
+    + size: 3 (number)
+    + rotation: 264 (number) - rotation in degrees
+    + is_cluster: true (boolean)
+    + maturity_time: 15593060634745 (number) - date stamp of when the mushroom is ready to be picked
 
-+ Request (application/json)
-
-        {
-            "harvester_id": "1",
-        }
-
-+ Response 200 (application/json)
-
-    + Headers
-
-            Location: /harvesters/1/cart
-
-    + Body
-        
-            {
-                "id": "1",
-                "level_id": "10",
-                "status": "1"
-            }
-            
-# Group Scales
-
-## Scale [/harvesters/{harvester_id}/scale]
-
-### Show a scale [GET]
-
-This route exposes the Scale of a single Harvester.
-
-+ Request (application/json)
-
-        {
-            "harvester_id": "1",
-        }
+### Retrieve a Mushroom [GET]
+Retrieves the level with the given ID.
 
 + Response 200 (application/json)
+    + Attributes (Mushroom)
 
-    + Headers
+## Mushrooms [/mushrooms{?limit}]
 
-            Location: /harvesters/1/scale
++ Attributes (array[mushrooms])
 
-    + Body
-        
-            {
-                "id": "1",
-                "current_output": "0.145",
-                "status": "1"
-                
-            }
+### List all Mushrooms [GET]
+Returns a list of your Beds.
+
++ Parameters
+    + limit (number, optional)
+
+        A limit on the number of objects to be returned. Limit can range
+        between 1 and 500 items.
+
+        + Default: `50`
+
++ Response 200 (application/json)
+    + Attributes (Mushrooms)

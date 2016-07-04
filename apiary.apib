@@ -15,12 +15,13 @@ A harvester is a single unit consisting of a lift, cart, scale and a packer. Ins
 
 ### List all Harvesters [GET]
 
+This route displays all Harvesters on a site, and includes their name, ID, and status.
+
+
 + Attributes
     + id (number) - ID of the harvester in the form of an integer
     + name (string) - Descriptor of the harvester
     
-
-This route displays all Harvesters on a site, and includes their name, ID, and status.
 
 + Response 200 (application/json)
 
@@ -74,48 +75,43 @@ This route exposes a single Harvester, shows the current level and bed position,
                 "bed_id": 40,
             }
 
+
 # Group Levels
 
-A Level is a horizontal collection of beds, located on a harvester.
-
 ## Level [/harvesters/{harvester_id}/levels/{id}]
-
-
-## Levels Collection [/harvesters/{harvester_id}/levels]
-
-This route displays all Levels on an individual Harvester, and includes their name and ID.
-
-+ Attributes (object)
-    + id (number) - ID of the level in the form of an integer
-    + status (enum[number])
-    Status of the level in the form of an integer
-        + 0: inactive
-        + 1: active
-    + position (number) - Where the level is located vertically
-
-### List all Levels [GET]
-
+A level is a collection of beds stacked vertically in a a harvester.
 
 + Parameters
-    + id (number) - ID of harvester in the form of an integer
+    + harvester_id (number, optional) - the ID of the parent harvester.
+    + id (number) - The ID of the desired level.
+
++ Attributes (object)
+    + id: 1 (number, required)
+    + position: 0 (number, required) - vertical location of level 
+
+### Retrieve a Level [GET]
+Retrieves the level with the given ID.
 
 + Response 200 (application/json)
+    + Attributes (Level)
 
+## Levels [/level{?limit}]
 
++ Attributes (array[Level])
 
+### List all Levels [GET]
+Returns a list of your Levels.
 
-    + Body
-    
-        [
-            {
-                "name": "Harvester1",
-                "id": 1,
-            },
-            {
-                "name": "Harvester2",
-                "id": 2,
-            },
-        ]
++ Parameters
+    + limit (number, optional)
+
+        A limit on the number of objects to be returned. Limit can range
+        between 1 and 100 items.
+
+        + Default: `25`
+
++ Response 200 (application/json)
+    + Attributes (Levels)
 
 
 # Group Lifts

@@ -95,7 +95,7 @@ Retrieves the level with the given ID.
 + Response 200 (application/json)
     + Attributes (Level)
 
-## Levels [/level{?limit}]
+## Levels [/levels{?limit}]
 
 + Attributes (array[Level])
 
@@ -112,6 +112,46 @@ Returns a list of your Levels.
 
 + Response 200 (application/json)
     + Attributes (Levels)
+
+# Group Beds
+
+## Bed [/harvesters/{harvester_id}/beds/{id}]
+A bed is a soil area on a level where mushrooms are grown.
+
++ Parameters
+    + harvester_id (number, optional) - the ID of the parent harvester.
+    + id (number) - The ID of the desired bed.
+
++ Attributes (object)
+    + id: 1 (number, required)
+    + position: 0 (number, required) - horizontal location of bed on a level
+    + width: 24 (number) - width of bed in cm
+    + height: 96 (number) - height of bed in cm 
+
+### Retrieve a Bed [GET]
+Retrieves the level with the given ID.
+
++ Response 200 (application/json)
+    + Attributes (Bed)
+
+## Beds [/beds{?limit}]
+
++ Attributes (array[Bed])
+
+### List all Beds [GET]
+Returns a list of your Beds.
+
++ Parameters
+    + limit (number, optional)
+
+        A limit on the number of objects to be returned. Limit can range
+        between 1 and 100 items.
+
+        + Default: `25`
+
++ Response 200 (application/json)
+    + Attributes (Beds)
+
 
 
 # Group Lifts

@@ -1,97 +1,187 @@
 FORMAT: 1A
-HOST: http://polls.apiblueprint.org/
+HOST: http://harvesters.whitecrestmushrooms.com/
 
 # Whitecrest Mushrooms
 
-This API lists all the pickers associated with a site, sends information about hardware status, and shows data about picking, packing, and mushroom growing.
+This API lists all the harvesters associated with a site, sends information about hardware status, and shows data about picking, packing, and mushroom growing.
 
-# Group Pickers
 
-## Pickers Collection [/pickers]
+# Group Harvesters
 
-A Picker is a single unit consisting of a lift, cart and a packer.
+A harvester is a single unit consisting of a lift, cart, scale and a packer. Inside a harvester there are mushrooms growing on beds, spread over many different vertical levels.
 
-### List all Pickers [GET]
+## Harvesters Collection [/harvesters]
 
-This route displays all Pickers on a site, and includes their name and ID.
+
+### List all Harvesters [GET]
+
++ Attributes
+    + id (number) - ID of the harvester in the form of an integer
+    + name (string) - Descriptor of the harvester
+    
+
+This route displays all Harvesters on a site, and includes their name, ID, and status.
 
 + Response 200 (application/json)
 
         [
             {
-                "name": "Picker1",
+                "name": "Harvester1",
                 "id": 1,
+                "status": 1,
             },
             {
-                "name": "Picker2",
+                "name": "Harvester2",
                 "id": 2,
+                "status": 0,
             },
         ]
 
-## Picker [/pickers/{picker_id}]
+## Harvester [/harvesters/{id}]
 
 + Parameters
-    + picker_id (number) - ID of the picker in the form of an integer
+    + id (number) - ID of the harvester in the form of an integer
 
-### Show a Picker [GET]
 
-This route exposes a single Picker.
++ Attributes
+    + id (number) - ID of the harvester in the form of an integer
+    + status (enum[number])
+        Status of the harvester in the form of an integer
+        + 0: inactive
+        + 1: active
+    + name (string) - Descriptor of the harvester
+    + level_id (number) - ID of the level the harvester is positioned at
+    + bed_id (number)  - ID of the bed the harvester is positioned at
+
+
+### Show a Harvester [GET]
+
+This route exposes a single Harvester, shows the current level and bed position, and shows the status.
 
 + Request (application/json)
 
         {
-            "picker_id": 1,
-
+            "id": 1,
         }
 
 + Response 200 (application/json)
-
-    + Headers
-
-            Location: /pickers/1
 
     + Body
         
             {
-                "name": "Picker1",
+                "name": "Harvester1",
                 "level_id": 10,
-                
-                
+                "bed_id": 40,
             }
+
+# Group Levels
+
+A Level is a horizontal collection of beds, located on a harvester.
+
+## Level [/harvesters/{harvester_id}/levels/{id}]
+
+
+## Levels Collection [/harvesters/{harvester_id}/levels]
+
+This route displays all Levels on an individual Harvester, and includes their name and ID.
+
++ Attributes (object)
+    + id (number) - ID of the level in the form of an integer
+    + status (enum[number])
+    Status of the level in the form of an integer
+        + 0: inactive
+        + 1: active
+    + position (number) - Where the level is located vertically
+
+### List all Levels [GET]
+
+
++ Parameters
+    + id (number) - ID of harvester in the form of an integer
+
++ Response 200 (application/json)
+
+
+
+
+    + Body
+    
+        [
+            {
+                "name": "Harvester1",
+                "id": 1,
+            },
+            {
+                "name": "Harvester2",
+                "id": 2,
+            },
+        ]
+
 
 # Group Lifts
 
+## Lift  [/harvesters/{harvester_id}/lift]
+
 # Group Packers
+
+## Packer [/harvesters/{harvester_id}/packer]
 
 # Group Carts
 
-## Cart [/pickers/{picker_id}/cart]
+## Cart [/harvesters/{harvester_id}/cart]
 
 + Parameters
-    + picker_id (number) - ID of the picker in the form of an integer
+    + harvester_id (number) - ID of the harvester in the form of an integer
     
 ### Show a cart [GET]
 
-This route exposes a the cart of a single Picker.
+This route exposes a the cart of a single Harvester.
 
 + Request (application/json)
 
         {
-            "picker_id": "1",
+            "harvester_id": "1",
         }
 
 + Response 200 (application/json)
 
     + Headers
 
-            Location: /pickers/1/cart
+            Location: /harvesters/1/cart
 
     + Body
         
             {
                 "id": "1",
-                "level": "10",
-                
+                "level_id": "10",
+                "status": "1"
             }
             
 # Group Scales
+
+## Scale [/harvesters/{harvester_id}/scale]
+
+### Show a scale [GET]
+
+This route exposes the Scale of a single Harvester.
+
++ Request (application/json)
+
+        {
+            "harvester_id": "1",
+        }
+
++ Response 200 (application/json)
+
+    + Headers
+
+            Location: /harvesters/1/scale
+
+    + Body
+        
+            {
+                "id": "1",
+                "current_output": "0.145",
+                "status": "1"
+                
+            }

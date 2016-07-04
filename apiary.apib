@@ -1,0 +1,56 @@
+FORMAT: 1A
+HOST: http://polls.apiblueprint.org/
+
+# Whitecrest Mushrooms
+
+This API lists all the pickers associated with a site, sends information about hardware status, and shows data about picking, packing, and mushroom growing.
+
+# Group Pickers
+
+## Pickers Collection [/pickers]
+
+A Picker is a single unit consisting of a lift, cart and a packer.
+
+### List All Pickers [GET]
+
+This route displays all Pickers on a site, and includes their name and ID.
+
++ Response 200 (application/json)
+
+        [
+            {
+                "name": "Picker1",
+                "id": "1",
+            },
+            {
+                "name": "Picker2",
+                "id": "2",
+            },
+        ]
+
+## Picker [/pickers/{picker_id}]
+
++ Parameters
+    + picker_id (number) - ID of the picker in the form of an integer
+
+### Show a Picker [GET]
+
+This route exposes a single Picker.
+
++ Request (application/json)
+
+        {
+            "name": "Picker1",
+        }
+
++ Response 200 (application/json)
+
+    + Headers
+
+            Location: /pickers/1
+
+    + Body
+        
+            {
+                "name": "Picker1",
+            }

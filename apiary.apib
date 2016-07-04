@@ -11,7 +11,7 @@ This API lists all the pickers associated with a site, sends information about h
 
 A Picker is a single unit consisting of a lift, cart and a packer.
 
-### List All Pickers [GET]
+### List all Pickers [GET]
 
 This route displays all Pickers on a site, and includes their name and ID.
 
@@ -20,11 +20,11 @@ This route displays all Pickers on a site, and includes their name and ID.
         [
             {
                 "name": "Picker1",
-                "id": "1",
+                "id": 1,
             },
             {
                 "name": "Picker2",
-                "id": "2",
+                "id": 2,
             },
         ]
 
@@ -40,7 +40,8 @@ This route exposes a single Picker.
 + Request (application/json)
 
         {
-            "name": "Picker1",
+            "picker_id": 1,
+
         }
 
 + Response 200 (application/json)
@@ -53,4 +54,44 @@ This route exposes a single Picker.
         
             {
                 "name": "Picker1",
+                "level_id": 10,
+                
+                
             }
+
+# Group Lifts
+
+# Group Packers
+
+# Group Carts
+
+## Cart [/pickers/{picker_id}/cart]
+
++ Parameters
+    + picker_id (number) - ID of the picker in the form of an integer
+    
+### Show a cart [GET]
+
+This route exposes a the cart of a single Picker.
+
++ Request (application/json)
+
+        {
+            "picker_id": "1",
+        }
+
++ Response 200 (application/json)
+
+    + Headers
+
+            Location: /pickers/1/cart
+
+    + Body
+        
+            {
+                "id": "1",
+                "level": "10",
+                
+            }
+            
+# Group Scales

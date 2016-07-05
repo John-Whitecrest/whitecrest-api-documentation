@@ -30,16 +30,16 @@ A harvester is a machine that picks and packs mushrooms.  A harvester is a singl
     + id (number) - The ID of the desired harvester.
 
 + Attributes (object)
-    + id (number) - ID of the harvester in the form of an integer
-    + status (enum[number])
+    + id:1 (number) - ID of the harvester in the form of an integer
+    + status:1 (enum[number])
         Status of the harvester in the form of an integer
         + Members
             + 0: inactive
             + 1: active
-    + name (string) - Descriptor of the harvester
-    + level_id (number) - ID of the level the harvester is positioned at
-    + bed_id (number) - ID of the bed the harvester is positioned at
-    + levels (number) - the number of levels in the harvester 
+    + name: Harvester1 (string) - Descriptor of the harvester
+    + level_id:1 (number) - ID of the level the harvester is positioned at
+    + bed_id:1 (number) - ID of the bed the harvester is positioned at
+    + levels:1 (number) - the number of levels in the harvester 
 
 ### Retrieve a Harvester [GET]
 Retrieves the Harvester with the given ID.
@@ -171,24 +171,6 @@ A mushroom is located on a bed, in a level, and on a harvester.
 
 ### Retrieve a Mushroom [GET]
 Retrieves the level with the given ID.
-
-+ Response 200 (application/json)
-    + Attributes (Mushroom)
-
-## Mushrooms [/mushrooms{?limit}]
-
-+ Attributes (array[mushrooms])
-
-### List all Mushrooms [GET]
-Returns a list of your Mushrooms.
-
-+ Parameters
-    + limit (number, optional)
-
-        A limit on the number of objects to be returned. Limit can range
-        between 1 and 500 items.
-
-        + Default: `50`
 
 + Response 200 (application/json)
     + Attributes (Mushroom)

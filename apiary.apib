@@ -53,7 +53,7 @@ A grower is a machine that picks and packs mushrooms.  A grower is a single unit
     + level_id (number) - ID of the level the grower is positioned at
     + bed_id (number) - ID of the bed the grower is positioned at
     + levels (number) - the number of levels in the grower
-    + right_hand (boolean) - if the packer is on the left or right side of the grower 
+    + right_hand (boolean) - if the packer is on the left or right side of the grower
 
 ### Retrieve a Grower [GET]
 
@@ -143,7 +143,7 @@ A bed is a soil area on a level where mushrooms are grown.
 
 + Response 200 (application/json)
     + Attributes (array[Bed])
-    
+
 ### List all Beds on Level [GET /levels/{level_id}/beds{?limit}]
 
 + Parameters
@@ -157,7 +157,7 @@ A bed is a soil area on a level where mushrooms are grown.
 
 + Response 200 (application/json)
     + Attributes (array[Bed])
-    
+
 ### List all Beds on Grower [GET /growers/{grower_id}/beds{?limit}]
 
 + Parameters
@@ -229,7 +229,7 @@ A mushroom is located on a bed, in a level, and on a grower.
 
 + Response 200 (application/json)
     + Attributes (Mushroom)
-    
+
 ### List all Mushrooms on Bed [GET /beds/{bed_id}/mushrooms{?limit}]
 
 + Attributes (array[mushrooms])
@@ -262,7 +262,7 @@ A mushroom is located on a bed, in a level, and on a grower.
 + Response 200 (application/json)
     + Attributes (Mushroom)
 
-    
+
 # Group Lugs
 
 A lug is a reusable bin where trays are placed into.
@@ -277,7 +277,7 @@ A lug is a reusable bin where trays are placed into.
     + id: 1 (number, required)
     + unique_identifier: o3452onfew529 (string)
     + grower_id: 1 (number)
-    
+
 ### Retrieve a Lug [GET]
 
 + Response 200 (application/json)
@@ -297,7 +297,7 @@ A lug is a reusable bin where trays are placed into.
 
 + Response 200 (application/json)
     + Attributes (Lug)
-    
+
 # Group Trays
 
 A tray is where mushrooms are harvested and deposited.
@@ -311,7 +311,7 @@ A tray is where mushrooms are harvested and deposited.
     + id: 1 (number, required)
     + unique_identifier: ot25o52o7kd091 (string)
     + lug_id: 1 (number)
-    
+
 ### Retrieve a Tray [GET]
 
 + Response 200 (application/json)
@@ -331,7 +331,7 @@ A tray is where mushrooms are harvested and deposited.
 
 + Response 200 (application/json)
     + Attributes (Tray)
-    
+
 # Group Harvest
 
 A harvest is an event where a mushroom gets picked.
@@ -347,7 +347,7 @@ A harvest is an event where a mushroom gets picked.
     + tray_id: 1 (number)
     + lug_id: 1 (number)
     + harvested_at: 350043582064 (number) - the timestamp when the harvest took place
-    
+
 ### Retrieve a Harvest [GET]
 
 + Response 200 (application/json)
@@ -367,7 +367,7 @@ A harvest is an event where a mushroom gets picked.
 
 + Response 200 (application/json)
     + Attributes (Harvest)
-    
+
 ### List all Harvests on Grower [GET growers/{grower_id}/harvests{?limit}]
 
 + Attributes (array[harvests])
@@ -403,7 +403,7 @@ A scan is when a mushroom size and growing amount is updated.
     + rotation: 264 (number) - rotation in degrees
     + is_cluster: true (boolean)
     + scanned_at: 350043582064 (number) - the timestamp when the scan took place
-    
+
 ### Retrieve a Scan [GET]
 
 + Response 200 (application/json)
@@ -422,4 +422,113 @@ A scan is when a mushroom size and growing amount is updated.
         + Default: `100`
 
 + Response 200 (application/json)
-    + Attributes (Harvest)
+    + Attributes (Scan)
+
+# Group Test
+
+A test is when a bed's temperature, pH, moisture, and humidity is recorded.
+
+## Test [/tests/{id}]
+
++ Parameters
+    + id (number) - The ID of the desired test.
+
++ Attributes (object)
+    + id: 1 (number, required)
+    + bed_id: 1 (number)
+    + pH: 1 (number)
+    + moisture: 14 (number) - moisture amount
+    + humidity: 6345 (number) - humidity amount
+    + tested_at: 350043582064 (number) - the timestamp when the test took place
+
+### Retrieve a Test [GET]
+
++ Response 200 (application/json)
+    + Attributes (Test)
+
+### List all Tests [GET /tests{?limit}]
+
++ Attributes (array[tests])
+
++ Parameters
+    + limit (number, optional)
+
+        A limit on the number of objects to be returned. Limit can range
+        between 1 and 1000 items.
+
+        + Default: `100`
+
++ Response 200 (application/json)
+    + Attributes (Test)
+
+
+# Group Pack
+
+A pack is the action of putting a tray into a lug.
+
+## Pack [/packs/{id}]
+
++ Parameters
+    + id (number) - The ID of the desired pack.
+
++ Attributes (object)
+    + id: 1 (number, required)
+    + tray_id: 1 (number)
+    + lug_id: 1 (number)
+    + packed_at: 350043582064 (number) - the timestamp when the pack took place
+
+### Retrieve a Pack [GET]
+
++ Response 200 (application/json)
+    + Attributes (Pack)
+
+### List all Packs [GET /packs{?limit}]
+
++ Attributes (array[packs])
+
++ Parameters
+    + limit (number, optional)
+
+        A limit on the number of objects to be returned. Limit can range
+        between 1 and 1000 items.
+
+        + Default: `100`
+
++ Response 200 (application/json)
+    + Attributes (Pack)
+
+
+# Group Release
+
+A release is the action of when a lug is sent from the grower.
+
+## Release [/release/{id}]
+
++ Parameters
+    + id (number) - The ID of the desired release.
+
++ Attributes (object)
+    + id: 1 (number, required)
+    + grower_id: 1 (number)
+    + lug_id: 1 (number)
+    + released_at: 350043582064 (number) - the timestamp when the release took place
+
+### Retrieve a Release [GET]
+
++ Response 200 (application/json)
+    + Attributes (Release)
+
+### List all Releases [GET /releases{?limit}]
+
++ Attributes (array[releases])
+
++ Parameters
+    + limit (number, optional)
+
+        A limit on the number of objects to be returned. Limit can range
+        between 1 and 1000 items.
+
+        + Default: `100`
+
++ Response 200 (application/json)
+    + Attributes (Release)

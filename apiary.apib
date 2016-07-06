@@ -39,7 +39,6 @@ A grower is a machine that picks and packs mushrooms.  A grower is a single unit
 
 ## Grower [/growers/{id}]
 
-
 + Parameters
     + id (number) - The ID of the desired grower.
 
@@ -57,20 +56,13 @@ A grower is a machine that picks and packs mushrooms.  A grower is a single unit
     + right_hand (boolean) - if the packer is on the left or right side of the grower 
 
 ### Retrieve a Grower [GET]
-Retrieves the Grower with the given ID.
 
 + Response 200 (application/json)
     + Attributes (Grower)
 
-## Growers [/growers/{id}{?limit}]
-
-+ Attributes (array[Grower])
-
-### List all Growers [GET]
-Returns a list of your Growers on a site.
+### List all Growers [GET /growers{?limit}]
 
 + Parameters
-    + id (number) - the ID of the grower.
     + limit (number, optional)
 
         A limit on the number of objects to be returned. Limit can range
@@ -79,7 +71,7 @@ Returns a list of your Growers on a site.
         + Default: `25`
 
 + Response 200 (application/json)
-    + Attributes (Grower)
+    + Attributes (array[Grower])
 
 
 # Group Levels
@@ -87,7 +79,6 @@ Returns a list of your Growers on a site.
 A level is a collection of beds stacked vertically in a a grower.
 
 ## Level [/levels/{id}]
-
 
 + Parameters
     + id (number) - The ID of the desired level.
@@ -98,16 +89,11 @@ A level is a collection of beds stacked vertically in a a grower.
     + beds: [1,2,3,4] (array[number]) - array of bed ID's in level
 
 ### Retrieve a Level [GET]
-Retrieves the level with the given ID.
 
 + Response 200 (application/json)
     + Attributes (Level)
 
-## Levels [/grower/{grower_id}/levels{?limit}]
-
-+ Attributes (array[Level])
-
-### List all Levels [GET]
+### List all Levels on Grower [GET /grower/{grower_id}/levels{?limit}]
 Returns a list of your Levels on a specific grower, in order of position.
 
 + Parameters
@@ -120,7 +106,7 @@ Returns a list of your Levels on a specific grower, in order of position.
         + Default: `25`
 
 + Response 200 (application/json)
-    + Attributes (Levels)
+    + Attributes (array[Level])
 
 # Group Beds
 
@@ -142,16 +128,11 @@ A bed is a soil area on a level where mushrooms are grown.
     + temperature: 276 (number) - the current temperature
 
 ### Retrieve a Bed [GET]
-Retrieves the level with the given ID.
 
 + Response 200 (application/json)
     + Attributes (Bed)
 
-## Beds [/beds{?limit}]
-
-+ Attributes (array[Bed])
-
-### List all Beds [GET]
+### List all Beds [GET /beds{?limit}]
 Returns a list of your Beds.
 
 + Parameters
@@ -163,7 +144,22 @@ Returns a list of your Beds.
         + Default: `25`
 
 + Response 200 (application/json)
-    + Attributes (Beds)
+    + Attributes (array[Bed])
+    
+### List all Beds on Level [GET /levels/{level_id}/beds{?limit}]
+Returns a list of your Beds on a specific level.
+
++ Parameters
+    + level_id: 1 (number) - The ID of the level where the beds are.
+    + limit (number, optional)
+
+        A limit on the number of objects to be returned. Limit can range
+        between 1 and 100 items.
+
+        + Default: `25`
+
++ Response 200 (application/json)
+    + Attributes (array[Bed])
 
 # Group Mushrooms
 
@@ -185,17 +181,14 @@ A mushroom is located on a bed, in a level, and on a grower.
     + maturity_time: 15593060634745 (number) - date stamp of when the mushroom is ready to be picked
 
 ### Retrieve a Mushroom [GET]
-Retrieves the level with the given ID.
+
 
 + Response 200 (application/json)
     + Attributes (Mushroom)
 
-## Mushrooms [/mushrooms{?limit}]
+### List all Mushrooms [GET /mushrooms{?limit}]
 
 + Attributes (array[mushrooms])
-
-### List all Mushrooms [GET]
-Returns a list of your Mushrooms.
 
 + Parameters
     + limit (number, optional)
@@ -207,3 +200,72 @@ Returns a list of your Mushrooms.
 
 + Response 200 (application/json)
     + Attributes (Mushroom)
+    
+# Group Lugs
+
+A lug is a reusable bin where trays are placed into.
+
+## Lug [/lugs/{id}]
+
+
++ Parameters
+    + id (number) - The ID of the desired lug.
+
++ Attributes (object)
+    + id: 1 (number, required)
+    + unique_identifier: o3452onfew529 (string)
+    + grower_id: 1 (number)
+    
+### Retrieve a Lug [GET]
+
++ Response 200 (application/json)
+    + Attributes (Lug)
+
+### List all Lugs [GET  /lugs{?limit}]
+
++ Attributes (array[lugs])
+
++ Parameters
+    + limit (number, optional)
+
+        A limit on the number of objects to be returned. Limit can range
+        between 1 and 500 items.
+
+        + Default: `50`
+
++ Response 200 (application/json)
+    + Attributes (Lug)
+    
+# Group Trays
+
+A tray is where mushrooms are harvested and deposited.
+
+## Tray [/trays/{id}]
+
++ Parameters
+    + id (number) - The ID of the desired tray.
+
++ Attributes (object)
+    + id: 1 (number, required)
+    + unique_identifier: ot25o52o7kd091 (string)
+    + lug_id: 1 (number)
+    
+### Retrieve a Tray [GET]
+
++ Response 200 (application/json)
+    + Attributes (Tray)
+
+### List all Trays [GET /trays{?limit}]
+
++ Attributes (array[trays])
+
++ Parameters
+    + limit (number, optional)
+
+        A limit on the number of objects to be returned. Limit can range
+        between 1 and 500 items.
+
+        + Default: `50`
+
++ Response 200 (application/json)
+    + Attributes (Tray)

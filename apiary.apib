@@ -49,7 +49,7 @@ A grower is a machine that picks and packs mushrooms.  A grower is a single unit
         + Members
             + 0: inactive
             + 1: active
-    + name (string) - Descriptor of the grower
+    + name (string) - Description of the grower
     + level_id (number) - ID of the level the grower is positioned at
     + bed_id (number) - ID of the bed the grower is positioned at
     + levels (number) - the number of levels in the grower
@@ -113,7 +113,6 @@ Returns a list of your Levels on a specific grower, in order of position.
 A bed is a soil area on a level where mushrooms are grown.
 
 ## Bed [/beds/{id}]
-
 
 + Parameters
     + id (number) - The ID of the desired bed.
@@ -332,3 +331,95 @@ A tray is where mushrooms are harvested and deposited.
 
 + Response 200 (application/json)
     + Attributes (Tray)
+    
+# Group Harvest
+
+A harvest is an event where a mushroom gets picked.
+
+## Harvest [/trays/{id}]
+
++ Parameters
+    + id (number) - The ID of the desired harvest.
+
++ Attributes (object)
+    + id: 1 (number, required)
+    + mushroom_id: 1 (number)
+    + tray_id: 1 (number)
+    + lug_id: 1 (number)
+    + harvested_at: 350043582064 (number) - the timestamp when the harvest took place
+    
+### Retrieve a Harvest [GET]
+
++ Response 200 (application/json)
+    + Attributes (Tray)
+
+### List all Harvests [GET /harvests{?limit}]
+
++ Attributes (array[harvests])
+
++ Parameters
+    + limit (number, optional)
+
+        A limit on the number of objects to be returned. Limit can range
+        between 1 and 1000 items.
+
+        + Default: `100`
+
++ Response 200 (application/json)
+    + Attributes (Harvest)
+    
+### List all Harvests on Grower [GET growers/{grower_id}/harvests{?limit}]
+
++ Attributes (array[harvests])
+
++ Parameters
+    + grower_id: 1 (number)
+    + limit (number, optional)
+
+        A limit on the number of objects to be returned. Limit can range
+        between 1 and 1000 items.
+
+        + Default: `100`
+
++ Response 200 (application/json)
+    + Attributes (Harvest)
+
+# Group Scan
+
+A scan is when a mushroom size and growing amount is updated.
+
+## Scan [/scans/{id}]
+
++ Parameters
+    + id (number) - The ID of the desired scan.
+
++ Attributes (object)
+    + id: 1 (number, required)
+    + bed_id: 1 (number)
+    + mushroom_id: 1 (number)
+    + x-coordinate: 14 (number, required) - x position on bed
+    + y-coordinate: 35 (number, required) - y position on bed
+    + size: 3 (number)
+    + rotation: 264 (number) - rotation in degrees
+    + is_cluster: true (boolean)
+    + scanned_at: 350043582064 (number) - the timestamp when the scan took place
+    
+### Retrieve a Scan [GET]
+
++ Response 200 (application/json)
+    + Attributes (Scan)
+
+### List all Scans [GET /scans{?limit}]
+
++ Attributes (array[scans])
+
++ Parameters
+    + limit (number, optional)
+
+        A limit on the number of objects to be returned. Limit can range
+        between 1 and 1000 items.
+
+        + Default: `100`
+
++ Response 200 (application/json)
+    + Attributes (Harvest)

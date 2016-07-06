@@ -1,61 +1,61 @@
 FORMAT: 1A
-HOST: http://harvesters.whitecrestmushrooms.com/
+HOST: http://growers.whitecrestmushrooms.com/
 
 # Whitecrest Mushrooms
 
-This API lists all the harvesters associated with a site, sends information about hardware status, and shows data about picking, packing, and mushroom growing.
+This API lists all the growers associated with a site, sends information about hardware status, and shows data about picking, packing, and mushroom growing.
 
 ## Endpoints and API Access
 
-For ItemPath (or any other application) to access data from the harvester, an endpoint structure will need to be set up. Either the harvesters each will need to be connected to the internet and have an endpoint where this API is accesible, or each site will need to have a global processor to take data from the harvesters and provide a single endpoint to connect to.
+For ItemPath (or any other application) to access data from the grower, an endpoint structure will need to be set up. Either the growers each will need to be connected to the internet and have an endpoint where this API is accesible, or each site will need to have a global processor to take data from the growers and provide a single endpoint to connect to.
 
 ## Core Concepts & Routes
 
-* *Harvester:* A harvester is a single unit consisting of a lift, cart, scale and a packer. Inside a harvester there are mushrooms growing on beds, spread over many different vertical levels.
+* *Grower:* A grower is a single unit consisting of a lift, cart, scale and a packer. Inside a grower there are mushrooms growing on beds, spread over many different vertical levels.
     * *Packer:* The packer is the unit that puts the mushrooms into bins.
     * *Scale:* The scale weighs each packed bin of mushrooms.
-    * *Lift:* The lift is the apparatus that moves the picker between levels.
-    * *Picker:* The robotic arm that grabs mushrooms off of a bed and brings them to a packer.
-* *Level:* A level is a collection of beds stacked vertically in a a harvester.
+    * *Lift:* The lift is the apparatus that moves the harvester between levels.
+    * *Harvester:* The robotic arm that grabs mushrooms off of a bed and brings them to a packer.
+* *Level:* A level is a collection of beds stacked vertically in a a grower.
 * *Bed:* A bed is a soil area on a level where mushrooms are grown.
 
-# Group Harvesters
+# Group Growers
 
-A harvester is a machine that picks and packs mushrooms.  A harvester is a single unit consisting of a lift, cart, scale and a packer. Inside a harvester there are mushrooms growing on beds, spread over many different vertical levels. There can be multiple harvesters on a site.
+A grower is a machine that picks and packs mushrooms.  A grower is a single unit consisting of a lift, cart, scale and a packer. Inside a grower there are mushrooms growing on beds, spread over many different vertical levels. There can be multiple growers on a site.
 
-## Harvester [/harvesters/{id}]
+## Grower [/growers/{id}]
 
 
 + Parameters
-    + id (number) - The ID of the desired harvester.
+    + id (number) - The ID of the desired grower.
 
 + Attributes (object)
-    + id:1 (number) - ID of the harvester in the form of an integer
-    + status:1 (enum[number])
-        Status of the harvester in the form of an integer
+    + id (number) - ID of the grower in the form of an integer
+    + status (enum[number])
+        Status of the grower in the form of an integer
         + Members
             + 0: inactive
             + 1: active
-    + name: Harvester1 (string) - Descriptor of the harvester
-    + level_id:1 (number) - ID of the level the harvester is positioned at
-    + bed_id:1 (number) - ID of the bed the harvester is positioned at
-    + levels:1 (number) - the number of levels in the harvester 
+    + name (string) - Descriptor of the grower
+    + level_id (number) - ID of the level the grower is positioned at
+    + bed_id (number) - ID of the bed the grower is positioned at
+    + levels (number) - the number of levels in the grower
 
-### Retrieve a Harvester [GET]
-Retrieves the Harvester with the given ID.
+### Retrieve a Grower [GET]
+Retrieves the Grower with the given ID.
 
 + Response 200 (application/json)
-    + Attributes (Harvester)
+    + Attributes (Grower)
 
-## Harvesters [/harvesters/{id}{?limit}]
+## Levels [/growers/{id}{?limit}]
 
-+ Attributes (array[Harvester])
++ Attributes (array[Grower])
 
-### List all Harvesters [GET]
-Returns a list of your Harvesters on a site.
+### List all Growers [GET]
+Returns a list of your Growers on a site.
 
 + Parameters
-    + id (number) - the ID of the harvester.
+    + id (number) - the ID of the grower.
     + limit (number, optional)
 
         A limit on the number of objects to be returned. Limit can range
@@ -64,12 +64,12 @@ Returns a list of your Harvesters on a site.
         + Default: `25`
 
 + Response 200 (application/json)
-    + Attributes (Harvester)
+    + Attributes (Grower)
 
 
 # Group Levels
 
-A level is a collection of beds stacked vertically in a a harvester.
+A level is a collection of beds stacked vertically in a a grower.
 
 ## Level [/levels/{id}]
 
@@ -79,7 +79,7 @@ A level is a collection of beds stacked vertically in a a harvester.
 
 + Attributes (object)
     + id: 1 (number, required)
-    + position: 0 (number, required) - vertical location of level 
+    + position: 0 (number, required) - vertical location of level
     + beds: [1,2,3,4] (array[number]) - array of bed ID's in level
 
 ### Retrieve a Level [GET]
@@ -88,15 +88,15 @@ Retrieves the level with the given ID.
 + Response 200 (application/json)
     + Attributes (Level)
 
-## Levels [/harvester/{harvester_id}/levels{?limit}]
+## Levels [/grower/{grower_id}/levels{?limit}]
 
 + Attributes (array[Level])
 
 ### List all Levels [GET]
-Returns a list of your Levels on a specific harvester, in order of position.
+Returns a list of your Levels on a specific grower, in order of position.
 
 + Parameters
-    + harvester_id (number) - the ID of the harvester.
+    + grower_id (number) - the ID of the grower.
     + limit (number, optional)
 
         A limit on the number of objects to be returned. Limit can range
@@ -121,7 +121,7 @@ A bed is a soil area on a level where mushrooms are grown.
     + id: 1 (number, required)
     + position: 0 (number, required) - horizontal location of bed on a level
     + width: 24 (number) - width of bed in cm
-    + height: 96 (number) - height of bed in cm 
+    + height: 96 (number) - height of bed in cm
     + level_id: 1 (number) - the ID of the level the bed is located on
     + ph: 8 (number) - the current pH level
     + temperature: 276 (number) - the current temperature
@@ -152,7 +152,7 @@ Returns a list of your Beds.
 
 # Group Mushrooms
 
-A mushroom is located on a bed, in a level, and on a harvester.
+A mushroom is located on a bed, in a level, and on a grower.
 
 ## Mushroom [/mushrooms/{id}]
 
@@ -171,6 +171,24 @@ A mushroom is located on a bed, in a level, and on a harvester.
 
 ### Retrieve a Mushroom [GET]
 Retrieves the level with the given ID.
+
++ Response 200 (application/json)
+    + Attributes (Mushroom)
+
+## Mushrooms [/mushrooms{?limit}]
+
++ Attributes (array[mushrooms])
+
+### List all Mushrooms [GET]
+Returns a list of your Mushrooms.
+
++ Parameters
+    + limit (number, optional)
+
+        A limit on the number of objects to be returned. Limit can range
+        between 1 and 500 items.
+
+        + Default: `50`
 
 + Response 200 (application/json)
     + Attributes (Mushroom)

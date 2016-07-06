@@ -133,7 +133,6 @@ A bed is a soil area on a level where mushrooms are grown.
     + Attributes (Bed)
 
 ### List all Beds [GET /beds{?limit}]
-Returns a list of your Beds.
 
 + Parameters
     + limit (number, optional)
@@ -147,10 +146,23 @@ Returns a list of your Beds.
     + Attributes (array[Bed])
     
 ### List all Beds on Level [GET /levels/{level_id}/beds{?limit}]
-Returns a list of your Beds on a specific level.
 
 + Parameters
     + level_id: 1 (number) - The ID of the level where the beds are.
+    + limit (number, optional)
+
+        A limit on the number of objects to be returned. Limit can range
+        between 1 and 100 items.
+
+        + Default: `25`
+
++ Response 200 (application/json)
+    + Attributes (array[Bed])
+    
+### List all Beds on Grower [GET /growers/{grower_id}/beds{?limit}]
+
++ Parameters
+    + grower_id: 1 (number) - The ID of the grower where the beds are.
     + limit (number, optional)
 
         A limit on the number of objects to be returned. Limit can range
@@ -179,9 +191,11 @@ A mushroom is located on a bed, in a level, and on a grower.
     + rotation: 264 (number) - rotation in degrees
     + is_cluster: true (boolean)
     + maturity_time: 15593060634745 (number) - date stamp of when the mushroom is ready to be picked
+    + tray_id: 1 (number, optional) - the tray ID where the mushroom was harvested
+    + bed_id: 1 (number, optional) - the bed ID where the mushroom is growing
+    + grower_id: 1 (number) - the grower the mushroom was in
 
 ### Retrieve a Mushroom [GET]
-
 
 + Response 200 (application/json)
     + Attributes (Mushroom)
@@ -200,6 +214,55 @@ A mushroom is located on a bed, in a level, and on a grower.
 
 + Response 200 (application/json)
     + Attributes (Mushroom)
+
+### List all Mushrooms on Grower [GET /growers/{grower_id}/mushrooms{?limit}]
+
++ Attributes (array[mushrooms])
+
++ Parameters
+    + grower_id: 1 (number) - the ID of the grower
+    + limit (number, optional)
+
+        A limit on the number of objects to be returned. Limit can range
+        between 1 and 500 items.
+
+        + Default: `50`
+
++ Response 200 (application/json)
+    + Attributes (Mushroom)
+    
+### List all Mushrooms on Bed [GET /beds/{bed_id}/mushrooms{?limit}]
+
++ Attributes (array[mushrooms])
+
++ Parameters
+    + bed_id: 1 (number) - the ID of the bed
+    + limit (number, optional)
+
+        A limit on the number of objects to be returned. Limit can range
+        between 1 and 500 items.
+
+        + Default: `50`
+
++ Response 200 (application/json)
+    + Attributes (Mushroom)
+
+### List all Mushrooms on Tray [GET /trays/{tray_id}/mushrooms{?limit}]
+
++ Attributes (array[mushrooms])
+
++ Parameters
+    + tray_id: 1 (number) - the ID of the tray
+    + limit (number, optional)
+
+        A limit on the number of objects to be returned. Limit can range
+        between 1 and 500 items.
+
+        + Default: `50`
+
++ Response 200 (application/json)
+    + Attributes (Mushroom)
+
     
 # Group Lugs
 

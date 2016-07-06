@@ -35,7 +35,7 @@ For ItemPath (or any other application) to access data from the grower, an endpo
 
 # Group Growers
 
-A grower is a machine that picks and packs mushrooms.  A grower is a single unit consisting of a lift, cart, scale and a packer. Inside a grower there are mushrooms growing on beds, spread over many different vertical levels. There can be multiple growers on a site.
+A grower is a machine that picks and packs mushrooms.  A grower is a single unit consisting of beds, a lift, cart, scale and a packer. Inside a grower there are mushrooms growing on beds one multiple vertical levels. There can be multiple growers on a site.
 
 ## Grower [/growers/{id}]
 
@@ -76,7 +76,7 @@ A grower is a machine that picks and packs mushrooms.  A grower is a single unit
 
 # Group Levels
 
-A level is a collection of beds stacked vertically in a a grower.
+A level is a collection of beds at the same horizontal position in a grower.
 
 ## Level [/levels/{id}]
 
@@ -86,7 +86,7 @@ A level is a collection of beds stacked vertically in a a grower.
 + Attributes (object)
     + id: 1 (number, required)
     + position: 0 (number, required) - vertical location of level
-    + beds: [1,2,3,4] (array[number]) - array of bed ID's in level
+    + beds: [1,2,3,4] (array[number]) - array of bed IDs in level
 
 ### Retrieve a Level [GET]
 
